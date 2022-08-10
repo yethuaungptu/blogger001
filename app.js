@@ -29,7 +29,15 @@ app.use(
   })
 );
 
-mongoose.connect("mongodb://127.0.0.1/blogger001");
+// mongoose.connect("mongodb://127.0.0.1/blogger001");
+// var db = mongoose.connection;
+// db.on(
+//   "error",
+//   console.error.bind("MongoDB connection error at Blogger Projerct")
+// );
+mongoose.connect(
+  "mongodb+srv://yethu:abcd1234@blogger001.sggpjv5.mongodb.net/?retryWrites=true&w=majority"
+);
 var db = mongoose.connection;
 db.on(
   "error",
