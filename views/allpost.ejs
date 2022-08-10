@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html data-theme="lemonade">
+  <head>
+    <title>All Post</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="container">
+      <div class="text-center text-3xl">All Post</div>
+      <div class="m-3 grid lg:grid-cols-3 gap-2">
+        <% for(var i =0; i < posts.length; i++){%>
+        <div class="card card-compact w-96 bg-base-100 shadow-xl">
+          <figure>
+            <img src="<%= posts[i].image %>" alt="<%= posts[i].title %>" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= posts[i].title %></h2>
+            <h4 class="text-lg"><%= posts[i].author.name %></h4>
+            <p class="text-sm"><%= posts[i].content %></p>
+            <div class="card-actions justify-end">
+              <a href="/postdetail/<%= posts[i]._id %>" class="btn btn-primary">
+                Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </body>
+</html>

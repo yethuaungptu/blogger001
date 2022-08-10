@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lemonade">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ../partials/navbar %>
+    <section class="text-gray-600 body-font overflow-hidden">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+          <img
+            alt="ecommerce"
+            class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+            src="<%= post.image %>"
+          />
+          <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+            <h2 class="text-sm title-font text-gray-500 tracking-widest">
+              <%= post.author.name %>
+            </h2>
+            <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
+              <%= post.title %>
+            </h1>
+            <p class="leading-relaxed"><%= post.content %></p>
+            <div
+              class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5"
+            >
+              <div class="flex">
+                <span class="mr-3">Uploaded</span>
+                <div><%= post.created %></div>
+              </div>
+            </div>
+            <div class="flex pb-5 border-b-2">
+              <span class="font-medium text-md mr-5">Total Like</span>
+              2 likes
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="text-gray-600 body-font p-5">
+      <%for(var i = 0; i < comments.length; i++){%>
+      <div class="px-5 py-3 mx-auto border-b border-black">
+        <div
+          class="flex items-center lg:w-4/5 mx-auto border-b pb-5 mb-10 border-gray-200 sm:flex-row flex-col"
+        >
+          <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">
+              <%= comments[i].commenter.name %>
+            </h2>
+            <h3><small><%= comments[i].created %></small></h3>
+            <p class="leading-relaxed text-base"><%= comments[i].comment %></p>
+          </div>
+        </div>
+        <% if(comments[i].reply){%>
+        <div
+          class="flex items-center lg:w-3/5 mx-auto border-b pb-5 mb-5 border-gray-200 sm:flex-row flex-col"
+        >
+          <div
+            class="flex-grow sm:text-left text-center items-end mt-6 sm:mt-0"
+          >
+            <h2
+              class="text-gray-900 text-lg text-right title-font font-medium mb-2"
+            >
+              <%= locals.user.name %> (Author)
+            </h2>
+            <p class="leading-relaxed text-base text-right">
+              <%= comments[i].reply %>
+            </p>
+          </div>
+        </div>
+        <%}else{%>
+        <div
+          class="flex items-center lg:w-2/5 mx-auto border-b pb-5 mb-5 border-gray-200 sm:flex-row flex-col"
+        >
+          <div
+            class="flex-grow sm:text-left text-center items-end mt-6 sm:mt-0"
+          >
+            <div>
+              <input type="hidden" value="<%= comments[i]._id %>" />
+              <textarea
+                class="textarea textarea-primary"
+                placeholder="Reply Here"
+                cols="64"
+                rows="4"
+              ></textarea>
+            </div>
+            <button class="repBtn btn btn-primary btn-block btn-sm">
+              Reply
+            </button>
+          </div>
+        </div>
+        <%}%>
+      </div>
+      <%}%>
+    </section>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(".repBtn").click(function () {
+      const data = {
+        comment: $(this).parents()[0].children[0].children[0].value,
+        reply: $(this).parents()[0].children[0].children[1].value,
+      };
+      $.ajax({
+        url: "/users/givereply",
+        type: "POST",
+        data: data,
+      }).done((result) => {
+        if (result.status == "error") {
+          alert("Somethings was wrong");
+        } else {
+          location.reload();
+        }
+      });
+    });
+  </script>
+</html>

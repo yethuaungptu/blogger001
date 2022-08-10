@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html data-theme="lemonade">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="container">
+      <div class="text-center text-3xl">Most Like Posts</div>
+      <div class="m-3 grid lg:grid-cols-3 gap-2">
+        <% for(var i =0; i < morelike.length; i++){%>
+        <div class="card card-compact w-96 bg-base-100 shadow-xl">
+          <figure>
+            <img src="<%= morelike[i].image %>" alt="<%= morelike[i].title %>" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= morelike[i].title %></h2>
+            <h4 class="text-lg"><%= morelike[i].author[0].name %></h4>
+            <p class="text-sm"><%= morelike[i].content %></p>
+            <div class="card-actions justify-end">
+              <a href="/postdetail/<%= morelike[i]._id %>" class="btn btn-primary">
+                Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <%}%>
+        
+    </div>
+    <div class="text-center text-3xl">Most Comment Posts</div>
+      <div class="m-3 grid lg:grid-cols-3 gap-2">
+        <% for(var i =0; i < morecomment.length; i++){%>
+        <div class="card card-compact w-96 bg-base-100 shadow-xl">
+          <figure>
+            <img src="<%= morecomment[i].post[0].image %>" alt="<%= morecomment[i].post[0].title %>" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= morecomment[i].post[0].title %></h2>
+            <h4 class="text-lg"><%= morecomment[i].post[0].author %></h4>
+            <p class="text-sm"><%= morecomment[i].post[0].content %></p>
+            <div class="card-actions justify-end">
+              <a href="/postdetail/<%= morecomment[i].post[0]._id %>" class="btn btn-primary">
+                Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <%}%>
+        
+    </div>
+  </body>
+</html>

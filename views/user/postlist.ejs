@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lemonade">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Post List</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ../partials/navbar %>
+    <div class="m-3 grid lg:grid-cols-3 gap-2">
+      <% for(var i =0; i < posts.length; i++){%>
+      <div class="card card-compact w-96 bg-base-100 shadow-xl">
+        <figure>
+          <img src="<%= posts[i].image %>" alt="<%= posts[i].title %>" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title"><%= posts[i].title %></h2>
+          <h4 class="text-lg"><%= posts[i].author.name %></h4>
+          <p class="text-sm"><%= posts[i].content %></p>
+          <div class="card-actions justify-end">
+            <a
+              href="/users/postdetail/<%= posts[i]._id %>"
+              class="btn btn-primary"
+            >
+              Details</a
+            >
+          </div>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </body>
+</html>
